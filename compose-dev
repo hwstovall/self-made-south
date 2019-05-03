@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker-compose -f deploy/environments/development/docker-compose.yaml $@

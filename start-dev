@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+./compose-dev up -d
+./compose-dev exec ghost /bin/bash -c "./entrypoint.sh"
+./compose-dev logs ghost
