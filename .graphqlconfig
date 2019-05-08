@@ -1,0 +1,10 @@
+{
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Self Made South": {
+        "url": "http://self-made-south:8000/___graphql"
+      }
+    }
+  }
+}

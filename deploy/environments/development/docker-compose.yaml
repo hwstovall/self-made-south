@@ -5,7 +5,7 @@ services:
     image: ghost:2.21.0
     restart: always
     ports:
-      - 2368:2368
+    - 2368:2368
     environment:
       NODE_ENV: development
       url: "http://self-made-south:2368"
@@ -15,17 +15,38 @@ services:
       database__connection__user: "ghost"
       database__connection__password: "password"
       database__connection__database: "ghost"
-    volumes:
-      - ../../../ghost/theme:/var/lib/ghost/content/themes/self-made-south
-      - ./entrypoint.sh:/var/lib/ghost/entrypoint.sh
     depends_on:
-      - db
+    - db
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:2368 || exit 1"]
+      timeout: 5s
+      retries: 10
+
+  gatsby:
+    build:
+      context: .
+      dockerfile: containers/gatsby/Dockerfile
+    working_dir: /opt/self-made-south
+    entrypoint: /bin/bash -c 'tail -f /dev/null'
+    ports:
+    - 8000:8000
+    environment:
+      YARN_CACHE_FOLDER: /opt/yarn-cache
+    volumes:
+    - ../../../:/opt/self-made-south
+    - yarn-cache:/opt/yarn-cache
+    depends_on:
+    - ghost
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:8000 || exit 1"]
+      timeout: 5s
+      retries: 10
 
   db:
     image: mysql:5.7.26
     restart: always
     volumes:
-      - mysql:/var/lib/mysql
+    - mysql:/var/lib/mysql
     environment:
       MYSQL_DATABASE: "ghost"
       MYSQL_USER: "ghost"
@@ -33,8 +54,9 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 20s
+      timeout: 5s
       retries: 10
 
 volumes:
   mysql:
+  yarn-cache:
