@@ -1,0 +1,42 @@
+@import "variables";
+
+.preview {
+  a {
+    text-decoration: none;
+    color: $black;
+  }
+
+  margin-bottom: 4em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .featured-image {
+    height: 150px;
+  }
+
+  .body {
+    display: flex;
+
+  }
+
+  .excerpt {
+    margin-left: 2em;
+  }
+
+  @media screen and (max-width: 960px) {
+    .body {
+      flex-direction: column;
+    }
+
+    .excerpt {
+      margin-left: 0;
+    }
+
+    .featured-image {
+      height: auto;
+      width: 100;
+    }
+  }
+}

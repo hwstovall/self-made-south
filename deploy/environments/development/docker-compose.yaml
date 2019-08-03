@@ -22,26 +22,6 @@ services:
       timeout: 5s
       retries: 10
 
-  gatsby:
-    build:
-      context: .
-      dockerfile: containers/gatsby/Dockerfile
-    working_dir: /opt/self-made-south
-    entrypoint: /bin/bash -c 'tail -f /dev/null'
-    ports:
-    - 8000:8000
-    environment:
-      YARN_CACHE_FOLDER: /opt/yarn-cache
-    volumes:
-    - ../../../:/opt/self-made-south
-    - yarn-cache:/opt/yarn-cache
-    depends_on:
-    - ghost
-    healthcheck:
-      test: ["CMD-SHELL", "curl --fail http://localhost:8000 || exit 1"]
-      timeout: 5s
-      retries: 10
-
   db:
     image: mysql:5.7.26
     restart: always

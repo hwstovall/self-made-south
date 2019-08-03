@@ -1,42 +1,55 @@
-import { Link } from "gatsby"
-import * as PropTypes from "prop-types"
-import * as React from "react"
+import * as React from 'react';
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-);
+import { useWindowScroll } from 'react-use';
+import * as classNames from 'classnames';
+import { graphql, StaticQuery } from 'gatsby';
+import { LogoQuery } from '../graphql-types';
+import GatsbyImage from 'gatsby-image';
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
+interface HeaderProps {
+  readonly siteTitle: string;
+}
+
+
+const Header = ({ siteTitle }: HeaderProps) => {
+  const { y } = useWindowScroll();
+
+  return (
+    <StaticQuery
+      query={graphql`
+      query Logo {
+        file(relativePath: { eq: "logo.png" }) {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    `}
+
+      render={(data: LogoQuery) => (
+        <header className={classNames({ scrolled: y > 50 })}>
+          <div className="header-inner">
+            <div className="logo-container">
+              <a className="logo" href="/">
+                <GatsbyImage fluid={data.file.childImageSharp.fluid} />
+              </a>
+            </div>
+            <div className="nav-container">
+              <nav>
+                <ul className="nav-items">
+                  <li className="nav-item"><a href="/">Home</a></li>
+                  <li className="nav-item"><a href="#">About</a></li>
+                  <li className="nav-item"><a href="#">Contact</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </header>
+      )}
+    />
+  );
 };
 
-Header.defaultProps = {
-  siteTitle: ``,
-};
-
-export default Header
+export default Header;

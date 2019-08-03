@@ -1,0 +1,12 @@
+schema: http://0.0.0.0:8000/___graphql # This runs within the container so the host is ghost
+documents:
+- ./src/**/*.{ts,tsx}
+- ./node_modules/gatsby-*/**/*.js
+generates:
+  ./src/graphql-types.ts:
+    plugins:
+    - typescript
+    - typescript-operations
+config:
+  skipTypename: true
+  immutableTypes: true

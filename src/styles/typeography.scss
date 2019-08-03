@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro|Source+Serif+Pro:400,600,700&display=swap');
+
+html, body {
+  font-size: $base-font-size;
+  font-family: 'Source Sans Pro', sans-serif;
+
+  @media screen and (max-width: 960px){
+    font-size: $base-font-size * .8;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Source Serif Pro', serif;
+}

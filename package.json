@@ -5,33 +5,53 @@
   "version": "0.1.0",
   "author": "Harrison Stovall <hwstovall@gmail.com>",
   "dependencies": {
+    "@types/classnames": "^2.2.7",
+    "@types/react-helmet": "^5.0.8",
+    "@types/vivus": "^0.4.0",
+    "classnames": "^2.2.6",
     "gatsby": "^2.4.2",
     "gatsby-image": "^2.0.41",
     "gatsby-plugin-manifest": "^2.1.1",
     "gatsby-plugin-offline": "^2.1.0",
     "gatsby-plugin-react-helmet": "^3.0.12",
+    "gatsby-plugin-sass": "^2.0.11",
     "gatsby-plugin-sharp": "^2.0.36",
     "gatsby-plugin-typescript": "^2.0.13",
     "gatsby-source-filesystem": "^2.0.33",
     "gatsby-source-ghost": "^3.3.1",
     "gatsby-transformer-sharp": "^2.1.19",
+    "keyboardjs": "^2.5.1",
+    "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "react-use": "^9.0.0",
+    "rebound": "^0.1.0",
+    "vivus": "^0.4.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.1.3",
+    "@graphql-codegen/typescript": "^1.1.3",
+    "@graphql-codegen/typescript-operations": "^1.1.3",
+    "eslint-plugin-graphql": "^3.0.3",
+    "graphql": "^14.3.0",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
+  },
   "keywords": [
     "gatsby",
     "self-made-south"
   ],
   "license": "NONE",
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop --host 0.0.0.0",
+    "build": "yarn ts-gatsby build",
+    "develop": "GATSBY_GRAPHQL_IDE=playground yarn ts-gatsby develop --host 0.0.0.0",
+    "generate": "graphql-codegen",
     "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "serve": "yarn ts-gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
+    "ts-gatsby": "ts-node node_modules/.bin/gatsby"
   },
   "repository": {
     "type": "git",
